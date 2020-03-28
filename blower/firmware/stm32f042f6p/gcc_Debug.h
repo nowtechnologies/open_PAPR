@@ -763,6 +763,9 @@
 #ifndef __UDQ_FBIT__
 #define __UDQ_FBIT__ 64
 #endif
+#ifndef DEBUG
+#define DEBUG 1
+#endif
 #ifndef __INT8_TYPE__
 #define __INT8_TYPE__ signed char
 #endif
@@ -1383,15 +1386,6 @@
 #endif
 #ifndef __ATOMIC_RELEASE
 #define __ATOMIC_RELEASE 3
-#endif
-#ifndef DEBUG
-#define DEBUG 1
-#endif
-#ifndef flash_layout
-#define flash_layout 
-#endif
-#ifndef STM32F042x6
-#define STM32F042x6 
 #endif
 #endif
 

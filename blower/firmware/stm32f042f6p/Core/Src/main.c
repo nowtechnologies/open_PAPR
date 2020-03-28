@@ -106,7 +106,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    HAL_GPIO_TogglePin(MODE_LED_GPIO_Port, MODE_LED_Pin);
+    HAL_Delay(500u);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

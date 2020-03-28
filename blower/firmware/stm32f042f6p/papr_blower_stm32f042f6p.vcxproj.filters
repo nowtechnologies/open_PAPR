@@ -201,6 +201,9 @@
       <Filter>VisualGDB settings</Filter>
     </None>
     <None Include="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc\startup_stm32f042x6.s" />
+    <None Include="STM32F042F6Px_FLASH.ld">
+      <Filter>Source files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Inc\stm32f0xx_it.h">

@@ -13,8 +13,11 @@
   </Project>
   <Build xsi:type="com.visualgdb.build.embedded">
     <ToolchainID>
+      <ID>com.visualgdb.arm-eabi</ID>
       <Version>
-        <Revision>0</Revision>
+        <GCC>9.2.1</GCC>
+        <GDB>8.3.0</GDB>
+        <Revision>1</Revision>
       </Version>
     </ToolchainID>
     <MakeFilePathRelativeToSourceDir>Makefile</MakeFilePathRelativeToSourceDir>
@@ -22,10 +25,6 @@
     <AdditionalMakeArguments>$(LocalMultiThreadedBuildFlags)</AdditionalMakeArguments>
     <MakeCommandTemplate>
       <SkipWhenRunningCommandList>false</SkipWhenRunningCommandList>
-      <RemoteHost>
-        <HostName>BuildMachine</HostName>
-        <Transport>BuiltinShortcut</Transport>
-      </RemoteHost>
       <Command>$(ToolchainMake)</Command>
       <Arguments>$(ToolchainMakeArgs)</Arguments>
       <WorkingDirectory>$(BuildDir)</WorkingDirectory>
@@ -51,11 +50,18 @@
     <ShowMessageAfterExecuting>true</ShowMessageAfterExecuting>
   </CustomShortcuts>
   <UserDefinedVariables />
+  <ImportedPropertySheets />
   <CodeSense>
-    <Enabled>Unknown</Enabled>
+    <Enabled>True</Enabled>
     <ExtraSettings>
       <HideErrorsInSystemHeaders>true</HideErrorsInSystemHeaders>
       <SupportLightweightReferenceAnalysis>true</SupportLightweightReferenceAnalysis>
+      <DiscoverySettings>
+        <Mode>Enabled</Mode>
+        <SearchInProjectDir>true</SearchInProjectDir>
+        <SearchInSourceDirs>true</SearchInSourceDirs>
+        <SearchInIncludeSubdirs>true</SearchInIncludeSubdirs>
+      </DiscoverySettings>
       <CheckForClangFormatFiles>true</CheckForClangFormatFiles>
       <FormattingEngine xsi:nil="true" />
     </ExtraSettings>
@@ -63,6 +69,8 @@
       <Enabled>false</Enabled>
     </CodeAnalyzerSettings>
   </CodeSense>
+  <Configurations />
+  <ProgramArgumentsSuggestions />
   <Debug xsi:type="com.visualgdb.debug.embedded">
     <AdditionalStartupCommands />
     <AdditionalGDBSettings>
@@ -98,7 +106,7 @@
     <DebugMethod>
       <ID>com.sysprogs.arm.openocd</ID>
       <Configuration xsi:type="com.visualgdb.edp.openocd.settings">
-        <CommandLine>-f interface/stlink-v2.cfg -c "transport select hla_swd" -c "adapter speed 4000" -f target/stm32f0x.cfg -c init -c "reset init"</CommandLine>
+        <CommandLine>-f interface/stlink-v2.cfg -c "transport select hla_swd" -f target/stm32f0x.cfg -c init -c "reset init"</CommandLine>
         <ExtraParameters>
           <Frequency xsi:nil="true" />
           <BoostedFrequency xsi:nil="true" />
