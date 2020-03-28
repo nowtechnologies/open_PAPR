@@ -1,0 +1,86 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+
+Debug
+Release
+__vm
+.vs
+out/
+*.class
+.gradle/
+local.properties
+.build/
+.BUILD/
+*.TMP
+*.depend
+*.elay
+*.ods#
+*.odt#
+.objs/
+.OBJS/
+build/
+BUILD/
+
+*.lck
+*.s#?
+*.b#?
+*.l#?
+*.pro
+*.job
+*.launch
+*.out
+*.cscope_file_list
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.a
+*.la
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# firmwares
+*.elf
+*.bin
+*.hex
+
+# directories
+[Dd]ebug/
+[Rr]elease/
+[Bb]inaries/
+[Bb]in/
+.settings/
+*.stackdump
+
+*.opensdf
+*.sdf
+*.suo
+*.old
+VisualGDBCache
+CodeDB
+*.user
