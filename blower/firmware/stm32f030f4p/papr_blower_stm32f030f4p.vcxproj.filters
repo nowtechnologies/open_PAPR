@@ -98,7 +98,13 @@
       <UniqueIdentifier>{4507e7e7-a2e7-44a6-beee-4e15539e14e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Makefile" />
+    <None Include="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc\startup_stm32f030xc.s" />
+    <None Include="STM32F030F4Px_FLASH.ld">
+      <Filter>Source files</Filter>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Src\stm32f0xx_it.c">
       <Filter>Source files</Filter>
@@ -163,9 +169,6 @@
     <None Include="stm32.mak">
       <Filter>Source files\Device-specific files</Filter>
     </None>
-    <ClCompile Include="$(BSP_ROOT)\STM32F0xxxx\StartupFiles\startup_stm32f030x6.c">
-      <Filter>Source files\Device-specific files</Filter>
-    </ClCompile>
     <ClInclude Include="Core\Inc\stm32f0xx_it.h">
       <Filter>Header files</Filter>
     </ClInclude>
