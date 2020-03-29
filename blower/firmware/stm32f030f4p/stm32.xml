@@ -41,7 +41,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>papr_blower_stm32f030f4p.gpdsc</RelativePath>
-        <Timestamp>132299291498290902</Timestamp>
+        <Timestamp>132299497618945513</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -110,6 +110,23 @@
               </Files>
             </VirtualDirectorySnapshot>
             <VirtualDirectorySnapshot>
+              <Name>ADC</Name>
+              <Files>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc.h</RelativePath>
+                </VirtualFileSnapshot>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc_ex.h</RelativePath>
+                </VirtualFileSnapshot>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc.c</RelativePath>
+                </VirtualFileSnapshot>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc_ex.c</RelativePath>
+                </VirtualFileSnapshot>
+              </Files>
+            </VirtualDirectorySnapshot>
+            <VirtualDirectorySnapshot>
               <Name>RCC</Name>
               <Files>
                 <VirtualFileSnapshot>
@@ -149,23 +166,6 @@
               </Files>
             </VirtualDirectorySnapshot>
             <VirtualDirectorySnapshot>
-              <Name>TIM</Name>
-              <Files>
-                <VirtualFileSnapshot>
-                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim.h</RelativePath>
-                </VirtualFileSnapshot>
-                <VirtualFileSnapshot>
-                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim.c</RelativePath>
-                </VirtualFileSnapshot>
-                <VirtualFileSnapshot>
-                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim_ex.h</RelativePath>
-                </VirtualFileSnapshot>
-                <VirtualFileSnapshot>
-                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim_ex.c</RelativePath>
-                </VirtualFileSnapshot>
-              </Files>
-            </VirtualDirectorySnapshot>
-            <VirtualDirectorySnapshot>
               <Name>DMA</Name>
               <Files>
                 <VirtualFileSnapshot>
@@ -176,6 +176,23 @@
                 </VirtualFileSnapshot>
                 <VirtualFileSnapshot>
                   <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dma.c</RelativePath>
+                </VirtualFileSnapshot>
+              </Files>
+            </VirtualDirectorySnapshot>
+            <VirtualDirectorySnapshot>
+              <Name>TIM</Name>
+              <Files>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim.h</RelativePath>
+                </VirtualFileSnapshot>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim_ex.h</RelativePath>
+                </VirtualFileSnapshot>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim.c</RelativePath>
+                </VirtualFileSnapshot>
+                <VirtualFileSnapshot>
+                  <RelativePath>Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim_ex.c</RelativePath>
                 </VirtualFileSnapshot>
               </Files>
             </VirtualDirectorySnapshot>

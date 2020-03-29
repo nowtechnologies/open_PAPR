@@ -97,6 +97,12 @@
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{4507e7e7-a2e7-44a6-beee-4e15539e14e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\STM32Cube HAL\ADC">
+      <UniqueIdentifier>{af2385e3-9bd5-4ae5-a771-5a9a17dd3e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\STM32Cube HAL\ADC">
+      <UniqueIdentifier>{ad0ace14-73d4-41ab-8760-f69758649ad9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -104,6 +110,12 @@
     <None Include="STM32F030F4Px_FLASH.ld">
       <Filter>Source files</Filter>
     </None>
+    <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc_ex.c">
+      <Filter>Source files\STM32Cube HAL\ADC</Filter>
+    </ClCompile>
+    <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc_ex.h">
+      <Filter>Header files\STM32Cube HAL\ADC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Src\stm32f0xx_it.c">
@@ -259,5 +271,13 @@
     <None Include="stm32.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
+    <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
