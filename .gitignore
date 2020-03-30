@@ -65,9 +65,9 @@ BUILD/
 *.app
 
 # firmwares
-#*.elf
-#*.bin
-#*.hex
+*.elf
+*.bin
+*.hex
 
 # directories
 [Dd]ebug/
