@@ -68,10 +68,10 @@ void Error_Handler(void);
 #define ADC_POT_GPIO_Port GPIOA
 #define ADC_BATTERY_Pin GPIO_PIN_2
 #define ADC_BATTERY_GPIO_Port GPIOA
-#define BUTTON_Pin GPIO_PIN_1
-#define BUTTON_GPIO_Port GPIOB
-#define PWM_MOTOR_IN_Pin GPIO_PIN_9
+#define PWM_MOTOR_IN_Pin GPIO_PIN_4
 #define PWM_MOTOR_IN_GPIO_Port GPIOA
+#define PWM_RESERVED_Pin GPIO_PIN_9
+#define PWM_RESERVED_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
