@@ -64,10 +64,10 @@ void Error_Handler(void);
 #define MODE_LED_GPIO_Port GPIOF
 #define POWER_LED_Pin GPIO_PIN_1
 #define POWER_LED_GPIO_Port GPIOF
-#define ADC_POT_Pin GPIO_PIN_1
-#define ADC_POT_GPIO_Port GPIOA
-#define ADC_BATTERY_Pin GPIO_PIN_2
+#define ADC_BATTERY_Pin GPIO_PIN_1
 #define ADC_BATTERY_GPIO_Port GPIOA
+#define ADC_POT_Pin GPIO_PIN_3
+#define ADC_POT_GPIO_Port GPIOA
 #define PWM_MOTOR_IN_Pin GPIO_PIN_4
 #define PWM_MOTOR_IN_GPIO_Port GPIOA
 #define PWM_RESERVED_Pin GPIO_PIN_9
