@@ -57,7 +57,11 @@ const uint32_t indexAdcBattery =  0u;
 const uint32_t indexAdcPotmeter = 1u;
 const uint32_t indexAdcTemp =     2u;
 const uint32_t indexAdcVref =     3u;
-const uint32_t batteryRawMinValue = 0x888u;
+
+const uint32_t batteryMinOffRawValue =     2794u; // 16.00 V
+//const uint32_t batteryMinOnRawValue =      2881u; // 16.50 V
+const uint32_t batteryMinOnRawValue =      2968u; // 17.00 V
+const uint32_t batteryChargedRawValue =    3666u; // 21.00 V
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,8 +79,9 @@ static void MX_TIM14_Init(void);
 /* USER CODE BEGIN 0 */
 uint32_t map(uint32_t x, uint32_t in_min, uint32_t in_max, uint32_t out_min, uint32_t out_max)
 {
-  if ((in_max - in_min) > (out_max - out_min)) {
-    return (x - in_min) * (out_max - out_min+1) / (in_max - in_min+1) + out_min;
+  if ((in_max - in_min) > (out_max - out_min))
+  {
+    return (x - in_min) * (out_max - out_min + 1) / (in_max - in_min + 1) + out_min;
   }
   else
   {
@@ -160,16 +165,13 @@ int main(void)
   /* Variables */
   uint32_t pwm = 0x0u;
   uint32_t powerLedTimestamp;
-  uint32_t powerLedIntervalMs;
+  uint32_t powerLedIntervalMs = 100u;
   uint32_t modeLedTimestamp;
   uint32_t modeLedIntervalMs = 100u;
   const uint32_t modeLedOnTime = 50u;
   const uint32_t pwmLowLimit = 0; // 0xFFF / 20;
   const uint32_t adcPotmeterLowLimit = 0xFFF / 20;
-//  uint32_t modeLedOnTimestamp;
-//  uint32_t modeLedOnIntervalMs = 100u;
-//  uint32_t modeLedOffTimestamp;
-//  uint32_t modeLedOffIntervalMs = 0u;
+  int batteryOk = 1;
   
   /* USER CODE END 2 */
 
@@ -188,6 +190,15 @@ int main(void)
     {
       pwm = map(aADCxData[indexAdcPotmeter], adcPotmeterLowLimit, 0xFFF, pwmLowLimit, 0xFFF);
     }
+    if (batteryOk && aADCxData[indexAdcBattery] < batteryMinOffRawValue)
+    {
+      batteryOk = 0;
+    }
+    if (!batteryOk && aADCxData[indexAdcBattery] < batteryMinOnRawValue) {
+      batteryOk = 1;
+      HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
+    }
+    pwm = batteryOk ? pwm : 0u;
     __HAL_TIM_SET_COMPARE(&htim14, TIM_CHANNEL_1, pwm);
     uint32_t now = HAL_GetTick();
     if (pwm == 0)
@@ -211,8 +222,11 @@ int main(void)
         modeLedTimestamp = now;
       }
     }
-    
-    //HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
+    if (now - powerLedTimestamp > powerLedIntervalMs)
+    {
+      HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
+      powerLedTimestamp = now;
+    }
     HAL_Delay(10u);
   }
   /* USER CODE END 3 */

@@ -14,7 +14,7 @@
     <Entries>
       <KeyValue>
         <Key>com.sysprogs.mcuoptions.ignore_startup_file</Key>
-        <Value />
+        <Value>1</Value>
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.toolchainoptions.arm.libctype</Key>
