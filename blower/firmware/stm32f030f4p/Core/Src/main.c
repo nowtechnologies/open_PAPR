@@ -165,7 +165,7 @@ int main(void)
   /* Variables */
   uint32_t pwm = 0x0u;
   uint32_t powerLedTimestamp;
-  uint32_t powerLedIntervalMs = 100u;
+  uint32_t powerLedIntervalMs = 50u;
   uint32_t modeLedTimestamp;
   uint32_t modeLedIntervalMs = 100u;
   const uint32_t modeLedOnTime = 50u;
@@ -222,7 +222,7 @@ int main(void)
         modeLedTimestamp = now;
       }
     }
-    if (now - powerLedTimestamp > powerLedIntervalMs)
+    if (!batteryOk && now - powerLedTimestamp > powerLedIntervalMs)
     {
       HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
       powerLedTimestamp = now;
