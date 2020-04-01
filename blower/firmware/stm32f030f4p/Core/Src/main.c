@@ -58,10 +58,11 @@ const uint32_t indexAdcPotmeter = 1u;
 const uint32_t indexAdcTemp =     2u;
 const uint32_t indexAdcVref =     3u;
 
-const uint32_t batteryMinOffRawValue =     2794u; // 16.00 V
+const uint32_t batteryMinOffRawValue =      2794u; // 16.00 V
 //const uint32_t batteryMinOnRawValue =      2881u; // 16.50 V
-const uint32_t batteryMinOnRawValue =      2968u; // 17.00 V
-const uint32_t batteryChargedRawValue =    3666u; // 21.00 V
+const uint32_t batteryMinOnRawValue =       2968u; // 17.00 V
+const uint32_t batteryChargedRawValue =     3666u; // 21.00 V
+const unsigned int restartAfterBatteryLow = 0u;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -194,7 +195,7 @@ int main(void)
     {
       batteryOk = 0;
     }
-    if (!batteryOk && aADCxData[indexAdcBattery] < batteryMinOnRawValue) {
+    if (restartAfterBatteryLow && !batteryOk && aADCxData[indexAdcBattery] > batteryMinOnRawValue) {
       batteryOk = 1;
       HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
     }
@@ -484,12 +485,22 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, MODE_LED_Pin|POWER_LED_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : MODE_LED_Pin POWER_LED_Pin */
   GPIO_InitStruct.Pin = MODE_LED_Pin|POWER_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : BUZZER_Pin */
+  GPIO_InitStruct.Pin = BUZZER_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(BUZZER_GPIO_Port, &GPIO_InitStruct);
 
 }
 
