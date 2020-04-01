@@ -68,6 +68,7 @@ BUILD/
 *.elf
 *.bin
 *.hex
+*.ihex
 
 # directories
 [Dd]ebug/
