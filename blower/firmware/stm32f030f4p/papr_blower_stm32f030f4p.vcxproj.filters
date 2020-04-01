@@ -274,9 +274,18 @@
     <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_adc.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="..\application\applciation.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_adc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\application\applciation.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="papr_blower_stm32f030f4p_bsp.cpp">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

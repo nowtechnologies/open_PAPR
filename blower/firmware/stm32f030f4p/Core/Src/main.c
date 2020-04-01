@@ -33,9 +33,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_CHANNEL_COUNT                ((uint32_t)  4)
-#define ADC_SAMPLE_COUNT                 ((uint32_t)  4)
-#define ADC_CONVERTED_DATA_BUFFER_SIZE   ((uint32_t)  ADC_SAMPLE_COUNT * ADC_CHANNEL_COUNT)
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,18 +49,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim14;
 
 /* USER CODE BEGIN PV */
-static uint16_t aADCxConvertedData[ADC_CONVERTED_DATA_BUFFER_SIZE];
-static uint32_t aADCxData[ADC_CHANNEL_COUNT];
-const uint32_t indexAdcBattery =  0u;
-const uint32_t indexAdcPotmeter = 1u;
-const uint32_t indexAdcTemp =     2u;
-const uint32_t indexAdcVref =     3u;
 
-const uint32_t batteryMinOffRawValue =      2794u; // 16.00 V
-//const uint32_t batteryMinOnRawValue =      2881u; // 16.50 V
-const uint32_t batteryMinOnRawValue =       2968u; // 17.00 V
-const uint32_t batteryChargedRawValue =     3666u; // 21.00 V
-const unsigned int restartAfterBatteryLow = 0u;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,41 +60,13 @@ static void MX_TIM1_Init(void);
 static void MX_ADC_Init(void);
 static void MX_TIM14_Init(void);
 /* USER CODE BEGIN PFP */
-
+extern void setup();
+extern void loop();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t map(uint32_t x, uint32_t in_min, uint32_t in_max, uint32_t out_min, uint32_t out_max)
-{
-  if ((in_max - in_min) > (out_max - out_min))
-  {
-    return (x - in_min) * (out_max - out_min + 1) / (in_max - in_min + 1) + out_min;
-  }
-  else
-  {
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-  }
-}
 
-void calculateAndCopyAdcData(uint32_t const start, uint32_t const end)
-{
-  for (unsigned int i = start; i < end / 2; i++)
-  {
-    aADCxData[i % ADC_CHANNEL_COUNT] += aADCxConvertedData[i];
-    aADCxData[i % ADC_CHANNEL_COUNT] /= 2;
-  }
-}
-
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-  calculateAndCopyAdcData(ADC_CONVERTED_DATA_BUFFER_SIZE / 2, ADC_CONVERTED_DATA_BUFFER_SIZE);
-}
-
-void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
-{
-  calculateAndCopyAdcData(0, ADC_CONVERTED_DATA_BUFFER_SIZE / 2);
-}
 /* USER CODE END 0 */
 
 /**
@@ -143,36 +102,8 @@ int main(void)
   MX_ADC_Init();
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-
-  /* Turn on power LED */
-  HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
-  
-  /* Calibrate ADC */
-  if (HAL_ADCEx_Calibration_Start(&hadc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* Start ADC DMA */
-  if (HAL_ADC_Start_DMA(&hadc, (uint32_t *)aADCxConvertedData, ADC_CONVERTED_DATA_BUFFER_SIZE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* PWM Timer setup */
-  __HAL_TIM_SET_PRESCALER(&htim14, 3); //0 = 5.8 kHz, 1 = 2 kHz, 3 = 1.5 kHz (48 MHz CPU & 0xFFF max)
-  HAL_TIM_PWM_Start(&htim14, TIM_CHANNEL_1);
-  
-  /* Variables */
-  uint32_t pwm = 0x0u;
-  uint32_t powerLedTimestamp;
-  uint32_t powerLedIntervalMs = 50u;
-  uint32_t modeLedTimestamp;
-  uint32_t modeLedIntervalMs = 100u;
-  const uint32_t modeLedOnTime = 50u;
-  const uint32_t pwmLowLimit = 0; // 0xFFF / 20;
-  const uint32_t adcPotmeterLowLimit = 0xFFF / 20;
-  int batteryOk = 1;
+  setup();
+  loop();
   
   /* USER CODE END 2 */
 
@@ -184,51 +115,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    if (aADCxData[indexAdcPotmeter] < adcPotmeterLowLimit) {
-      pwm = 0;
-    }
-    else
-    {
-      pwm = map(aADCxData[indexAdcPotmeter], adcPotmeterLowLimit, 0xFFF, pwmLowLimit, 0xFFF);
-    }
-    if (batteryOk && aADCxData[indexAdcBattery] < batteryMinOffRawValue)
-    {
-      batteryOk = 0;
-    }
-    if (restartAfterBatteryLow && !batteryOk && aADCxData[indexAdcBattery] > batteryMinOnRawValue) {
-      batteryOk = 1;
-      HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
-    }
-    pwm = batteryOk ? pwm : 0u;
-    __HAL_TIM_SET_COMPARE(&htim14, TIM_CHANNEL_1, pwm);
-    uint32_t now = HAL_GetTick();
-    if (pwm == 0)
-    {
-      HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
-    }
-    else
-    {
-      if (now - modeLedTimestamp > modeLedIntervalMs)
-      {
-        if (HAL_GPIO_ReadPin(MODE_LED_GPIO_Port, MODE_LED_Pin) == GPIO_PIN_RESET)
-        {
-          HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_SET);
-          modeLedIntervalMs = modeLedOnTime;
-        }
-        else
-        {
-          HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
-          modeLedIntervalMs = (0xFFF - pwm ) / 4;
-        }
-        modeLedTimestamp = now;
-      }
-    }
-    if (!batteryOk && now - powerLedTimestamp > powerLedIntervalMs)
-    {
-      HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
-      powerLedTimestamp = now;
-    }
-    HAL_Delay(10u);
+
   }
   /* USER CODE END 3 */
 }
