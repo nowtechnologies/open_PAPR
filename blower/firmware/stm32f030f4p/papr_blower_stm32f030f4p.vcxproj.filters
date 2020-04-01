@@ -288,5 +288,8 @@
     <ClInclude Include="papr_blower_stm32f030f4p_bsp.cpp">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="..\application\common.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

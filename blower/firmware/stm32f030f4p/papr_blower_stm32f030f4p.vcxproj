@@ -95,6 +95,7 @@
     <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash.c" />
     <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash_ex.c" />
     <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_gpio.c" />
+    <ClInclude Include="..\application\common.h" />
     <ClInclude Include="papr_blower_stm32f030f4p_bsp.cpp" />
     <None Include="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc\startup_stm32f030xc.s" />
     <None Include="stm32.mak" />

@@ -7,31 +7,31 @@ extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim14;
 
 namespace {
-  constexpr uint32_t ADC_CHANNEL_COUNT = ((uint32_t)  4);
-  constexpr uint32_t ADC_SAMPLE_COUNT = ((uint32_t)  4);
-  constexpr uint32_t ADC_CONVERTED_DATA_BUFFER_SIZE =   ((uint32_t)  ADC_SAMPLE_COUNT * ADC_CHANNEL_COUNT);
+  constexpr uint32_t cAdcChannelCount = ((uint32_t)  4);
+  constexpr uint32_t cAdcSampleCount = ((uint32_t)  4);
+  constexpr uint32_t cAdcBufferSize =   ((uint32_t)  cAdcSampleCount * cAdcChannelCount);
   constexpr uint32_t cIndexAdcBattery =  0u;
   constexpr uint32_t cIndexAdcPotmeter = 1u;
   constexpr uint32_t cIndexAdcTemp =     2u;
   constexpr uint32_t cIndexAdcVref =     3u;
 }
 
-volatile uint16_t aADCxConvertedData[ADC_CONVERTED_DATA_BUFFER_SIZE];
-volatile  uint32_t aADCxData[ADC_CHANNEL_COUNT];
+volatile uint16_t adcBuffer[cAdcBufferSize];
+volatile  uint32_t adcData[cAdcChannelCount];
 
 void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
   for (unsigned int i = start; i < end / 2; i++) {
-    aADCxData[i % ADC_CHANNEL_COUNT] += aADCxConvertedData[i];
-    aADCxData[i % ADC_CHANNEL_COUNT] /= 2;
+    adcData[i % cAdcChannelCount] += adcBuffer[i];
+    adcData[i % cAdcChannelCount] /= 2;
   }
 }
 
 extern "C" void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
-  calculateAndCopyAdcData(ADC_CONVERTED_DATA_BUFFER_SIZE / 2, ADC_CONVERTED_DATA_BUFFER_SIZE);
+  calculateAndCopyAdcData(cAdcBufferSize / 2, cAdcBufferSize);
 }
 
 extern "C" void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc) {
-  calculateAndCopyAdcData(0, ADC_CONVERTED_DATA_BUFFER_SIZE / 2);
+  calculateAndCopyAdcData(0, cAdcBufferSize / 2);
 }
 
 extern "C" void setup() {
@@ -40,7 +40,7 @@ extern "C" void setup() {
     Error_Handler();
   }
   // Start ADC DMA
-  if (HAL_ADC_Start_DMA(&hadc, (uint32_t *)aADCxConvertedData, ADC_CONVERTED_DATA_BUFFER_SIZE) != HAL_OK) {
+  if (HAL_ADC_Start_DMA(&hadc, (uint32_t *)adcBuffer, cAdcBufferSize) != HAL_OK) {
     Error_Handler();
   }
   // PWM Timer setup
@@ -102,11 +102,12 @@ bool isBuzzerOn() {
 
 // ADC
 uint32_t getPotmeterValue() {
-  return aADCxData[cIndexAdcPotmeter];
+  return adcData[cIndexAdcPotmeter];
 }
 
 extern uint32_t getBatteryValue() {
-  return aADCxData[cIndexAdcBattery];
+  uint32_t value = adcData[cIndexAdcBattery];
+  return value;
 }
 
 // Motor
