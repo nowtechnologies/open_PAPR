@@ -60,10 +60,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define MODE_LED_Pin GPIO_PIN_0
-#define MODE_LED_GPIO_Port GPIOF
-#define POWER_LED_Pin GPIO_PIN_1
-#define POWER_LED_GPIO_Port GPIOF
 #define ADC_BATTERY_Pin GPIO_PIN_1
 #define ADC_BATTERY_GPIO_Port GPIOA
 #define BUZZER_Pin GPIO_PIN_2
@@ -72,8 +68,10 @@ void Error_Handler(void);
 #define ADC_POT_GPIO_Port GPIOA
 #define PWM_MOTOR_IN_Pin GPIO_PIN_4
 #define PWM_MOTOR_IN_GPIO_Port GPIOA
-#define PWM_RESERVED_Pin GPIO_PIN_9
-#define PWM_RESERVED_GPIO_Port GPIOA
+#define POWER_LED_Pin GPIO_PIN_5
+#define POWER_LED_GPIO_Port GPIOA
+#define MODE_LED_Pin GPIO_PIN_6
+#define MODE_LED_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

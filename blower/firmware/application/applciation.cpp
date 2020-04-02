@@ -2,18 +2,18 @@
 #include "applciation.h"
 
 namespace {
-  constexpr uint32_t cWarningSampleCount =            50u;
-  constexpr uint32_t cBatteryMinOffSampleCount =      50u;
-  constexpr uint32_t cModeLedOnTimeMs =               50u;
-  constexpr uint32_t cBuzzerOnTimeMs =                100u;
-  constexpr uint32_t cBuzzerOnTimeWhenBatteryDeadMs = 1000u;
-  constexpr uint32_t cBuzzerIntervalMs =       5000u;
-  constexpr uint32_t cPwmLowLimit =            papr::cPwmMax / 40;
-  constexpr uint32_t cAdcPotmeterLowLimit =    papr::cAdcMax / 20;
-  constexpr uint32_t cBatteryMinOffRawValue =  2794u; // 16.00 V
-  constexpr uint32_t cBatteryWarningRawValue = 2968u; // 17.00 V
-  constexpr uint32_t cBatteryChargedRawValue = 3666u; // 21.00 V
-  constexpr bool cRestartAfterBatteryLow =     false;
+  constexpr uint32_t cWarningSampleCount =            1u; // 1000 = ~12 sec
+  constexpr uint32_t cBatteryMinOffSampleCount =      1u; // 1000 = ~12 sec
+  constexpr uint32_t cModeLedOnTimeMs =               50u;  // Blink ON time
+  constexpr uint32_t cBuzzerOnTimeMs =                100u; // Beep ON time
+  constexpr uint32_t cBuzzerOnTimeWhenBatteryDeadMs = 1000u; // Long beep when battery level goes below minimum
+  constexpr uint32_t cBuzzerIntervalMs =              5000u; // Battery warning beep interval
+  constexpr uint32_t cPwmLowLimit =                   papr::cPwmMax / 40; // Minimum PWM
+  constexpr uint32_t cAdcPotmeterLowLimit =           papr::cAdcMax / 20;
+  constexpr uint32_t cBatteryMinOffRawValue =         2794u; // 16.00 V, cut off limit
+  constexpr uint32_t cBatteryWarningRawValue =        2968u; // 17.00 V, warning limit
+  constexpr uint32_t cBatteryChargedRawValue =        3666u; // 21.00 V
+  constexpr bool cRestartAfterBatteryLow =            false; // Restart if battery level goes back above cut off limit?
 }
 
 void startupBeep() {
@@ -30,7 +30,7 @@ void startupBeep() {
   }  
 }
 
-extern "C" void loop() {
+extern "C" void applicationLoop() {
   uint32_t pwm = 0x0u;
   uint32_t powerLedTimestamp;
   uint32_t powerLedIntervalMs = 50u;

@@ -16,10 +16,10 @@ namespace {
   constexpr uint32_t cIndexAdcVref =     3u;
   
   volatile bool adcReady = false;
+  
+  volatile uint16_t adcBuffer[cAdcBufferSize];
+  volatile uint32_t adcData[cAdcChannelCount];
 }
-
-volatile uint16_t adcBuffer[cAdcBufferSize];
-volatile  uint32_t adcData[cAdcChannelCount];
 
 void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
   for (unsigned int i = start; i < end / 2; i++) {
@@ -37,7 +37,7 @@ extern "C" void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc) {
   calculateAndCopyAdcData(0, cAdcBufferSize / 2);
 }
 
-extern "C" void setup() {
+extern "C" void applicationSetup() {
   // Calibrate ADC
   if (HAL_ADCEx_Calibration_Start(&hadc) != HAL_OK) {
     Error_Handler();
