@@ -66,12 +66,12 @@ void Error_Handler(void);
 #define POWER_LED_GPIO_Port GPIOF
 #define ADC_BATTERY_Pin GPIO_PIN_1
 #define ADC_BATTERY_GPIO_Port GPIOA
+#define BUZZER_Pin GPIO_PIN_2
+#define BUZZER_GPIO_Port GPIOA
 #define ADC_POT_Pin GPIO_PIN_3
 #define ADC_POT_GPIO_Port GPIOA
 #define PWM_MOTOR_IN_Pin GPIO_PIN_4
 #define PWM_MOTOR_IN_GPIO_Port GPIOA
-#define BUZZER_Pin GPIO_PIN_6
-#define BUZZER_GPIO_Port GPIOA
 #define PWM_RESERVED_Pin GPIO_PIN_9
 #define PWM_RESERVED_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */

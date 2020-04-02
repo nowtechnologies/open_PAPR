@@ -19,6 +19,7 @@ extern void turnOnBuzzer();
 extern void turnOffBuzzer();
 extern bool isBuzzerOn();
 // ADC
+extern bool isAdcReady();
 extern uint32_t getPotmeterValue();
 extern uint32_t getBatteryValue();
 // Motor

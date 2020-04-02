@@ -8,12 +8,14 @@ extern TIM_HandleTypeDef htim14;
 
 namespace {
   constexpr uint32_t cAdcChannelCount = ((uint32_t)  4);
-  constexpr uint32_t cAdcSampleCount = ((uint32_t)  4);
+  constexpr uint32_t cAdcSampleCount = ((uint32_t)  64);
   constexpr uint32_t cAdcBufferSize =   ((uint32_t)  cAdcSampleCount * cAdcChannelCount);
   constexpr uint32_t cIndexAdcBattery =  0u;
   constexpr uint32_t cIndexAdcPotmeter = 1u;
   constexpr uint32_t cIndexAdcTemp =     2u;
   constexpr uint32_t cIndexAdcVref =     3u;
+  
+  volatile bool adcReady = false;
 }
 
 volatile uint16_t adcBuffer[cAdcBufferSize];
@@ -28,6 +30,7 @@ void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
 
 extern "C" void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
   calculateAndCopyAdcData(cAdcBufferSize / 2, cAdcBufferSize);
+  adcReady = true;
 }
 
 extern "C" void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc) {
@@ -89,11 +92,11 @@ bool isModeLedOn() {
 
 // Buzzer
 void turnOnBuzzer() {
-  
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
 }
 
 void turnOffBuzzer() {
-  
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 }
 
 bool isBuzzerOn() {
@@ -101,11 +104,16 @@ bool isBuzzerOn() {
 }
 
 // ADC
+bool isAdcReady() {
+  return adcReady;
+}
+
 uint32_t getPotmeterValue() {
   return adcData[cIndexAdcPotmeter];
 }
 
 extern uint32_t getBatteryValue() {
+  adcReady = false;
   uint32_t value = adcData[cIndexAdcBattery];
   return value;
 }
