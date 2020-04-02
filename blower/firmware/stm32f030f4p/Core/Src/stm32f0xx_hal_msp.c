@@ -99,7 +99,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   
     __HAL_RCC_GPIOA_CLK_ENABLE();
     /**ADC GPIO Configuration    
-    PA1     ------> ADC_IN1
+    PA2     ------> ADC_IN2
     PA3     ------> ADC_IN3 
     */
     GPIO_InitStruct.Pin = ADC_BATTERY_Pin|ADC_POT_Pin;
@@ -148,7 +148,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_ADC1_CLK_DISABLE();
   
     /**ADC GPIO Configuration    
-    PA1     ------> ADC_IN1
+    PA2     ------> ADC_IN2
     PA3     ------> ADC_IN3 
     */
     HAL_GPIO_DeInit(GPIOA, ADC_BATTERY_Pin|ADC_POT_Pin);

@@ -136,12 +136,6 @@
     <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal.c">
       <Filter>Source files\STM32Cube HAL\COMMON</Filter>
     </ClCompile>
-    <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2c.c">
-      <Filter>Source files\STM32Cube HAL\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_i2c_ex.c">
-      <Filter>Source files\STM32Cube HAL\COMMON</Filter>
-    </ClCompile>
     <ClCompile Include="Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_rcc.c">
       <Filter>Source files\STM32Cube HAL\RCC</Filter>
     </ClCompile>
@@ -206,12 +200,6 @@
       <Filter>Header files\STM32Cube HAL\COMMON</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
-      <Filter>Header files\STM32Cube HAL\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_i2c.h">
-      <Filter>Header files\STM32Cube HAL\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_i2c_ex.h">
       <Filter>Header files\STM32Cube HAL\COMMON</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_rcc.h">
