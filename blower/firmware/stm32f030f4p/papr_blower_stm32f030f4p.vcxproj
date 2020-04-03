@@ -73,7 +73,7 @@
   </ImportGroup>
   <ItemGroup />
   <ItemGroup>
-    <ClCompile Include="..\application\applciation.cpp" />
+    <ClCompile Include="..\application\application.cpp" />
     <ClCompile Include="Core\Src\stm32f0xx_it.c" />
     <ClCompile Include="Core\Src\stm32f0xx_hal_msp.c" />
     <ClCompile Include="Core\Src\stm32f0xx_hal_timebase_tim.c" />
@@ -97,7 +97,7 @@
     <ClInclude Include="papr_blower_stm32f030f4p_bsp.cpp" />
     <None Include="Drivers\CMSIS\Device\ST\STM32F0xx\Source\Templates\gcc\startup_stm32f030xc.s" />
     <None Include="stm32.mak" />
-    <ClInclude Include="..\application\applciation.h" />
+    <ClInclude Include="..\application\application.h" />
     <ClInclude Include="Core\Inc\stm32f0xx_it.h" />
     <ClInclude Include="Core\Inc\stm32f0xx_hal_conf.h" />
     <ClInclude Include="Core\Inc\main.h" />

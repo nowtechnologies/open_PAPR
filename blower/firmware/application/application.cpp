@@ -1,5 +1,5 @@
 #include "common.h"
-#include "applciation.h"
+#include "application.h"
 
 namespace {
   constexpr uint32_t cBatteryOverLimitSampleCount =   2000u; // 1000 = ~12 sec
