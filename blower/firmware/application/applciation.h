@@ -155,57 +155,5 @@ namespace papr {
     BatteryLevel mBatteryLevel = BatteryLevel::cBatteryOk;
     
   };
-  /*
-  class OverLimitCounter {
-    
-  public:
-    
-    OverLimitCounter(uint32_t const aValueUpperLimit, uint32_t const aValueLowerLimit, uint32_t const aCounterLimit)
-      : cValueUpperLimit(aValueUpperLimit)
-      , cValueLowerLimit(aValueLowerLimit)
-      , cCounterLimit(aCounterLimit) {
-      
-    }
-    
-    void reset() {
-      mCounter = 0;
-    }
-    
-//    uint32_t getCounter() const {
-//      return mCounter;
-//    }
-    
-    bool update(uint32_t const aValue) {
-      bool prevLimitReached = isLimitReached();
-      bool prevZero = isZero();
-      if (aValue >= cValueLowerLimit && aValue <= cValueUpperLimit) { // In range
-        mCounter = mCounter < cCounterLimit ? ++mCounter : cCounterLimit;
-      }
-      else if (aValue > cValueUpperLimit) { // Above range
-        mCounter = mCounter > 0 ? --mCounter : 0;
-      }
-      else { // Below range
-        //reset();
-      }
-      return isLimitReached() != prevLimitReached || prevZero != isZero();
-    }
-    
-    inline bool isLimitReached() const {
-      return mCounter >= cCounterLimit;
-    }
-    
-    inline bool isZero() const {
-      return mCounter == 0;
-    }
-    
-  private:
-    
-    const uint32_t cValueUpperLimit;
-    const uint32_t cValueLowerLimit;
-    const uint32_t cCounterLimit;
-    uint32_t mCounter = 0u;
-    
-  };
-  */
   
 }
