@@ -2,32 +2,33 @@
 #include "applciation.h"
 
 namespace {
-  constexpr uint32_t cWarningSampleCount =            1u; // 1000 = ~12 sec
-  constexpr uint32_t cBatteryMinOffSampleCount =      1u; // 1000 = ~12 sec
+  constexpr uint32_t cBatteryOverLimitSampleCount =   1000u; // 1000 = ~12 sec
   constexpr uint32_t cModeLedOnTimeMs =               50u;  // Blink ON time
   constexpr uint32_t cBuzzerOnTimeMs =                100u; // Beep ON time
   constexpr uint32_t cBuzzerOnTimeWhenBatteryDeadMs = 1000u; // Long beep when battery level goes below minimum
-  constexpr uint32_t cBuzzerIntervalMs =              5000u; // Battery warning beep interval
+  constexpr uint32_t cWarningBuzzerIntervalMs =       10000u; // Battery warning beep interval
+  constexpr uint32_t cOffBuzzerIntervalMs =           2000u; // Battery warning beep interval
   constexpr uint32_t cPwmLowLimit =                   papr::cPwmMax / 40; // Minimum PWM
   constexpr uint32_t cAdcPotmeterLowLimit =           papr::cAdcMax / 20;
   constexpr uint32_t cBatteryMinOffRawValue =         2794u; // 16.00 V, cut off limit
   constexpr uint32_t cBatteryWarningRawValue =        2968u; // 17.00 V, warning limit
   constexpr uint32_t cBatteryChargedRawValue =        3666u; // 21.00 V
   constexpr bool cRestartAfterBatteryLow =            false; // Restart if battery level goes back above cut off limit?
-}
+  
+  void startupBeep() {
+    constexpr auto beeps = 2u;
+    constexpr auto delayMs = 100u;
+    constexpr auto beepMs = 40u;
+    for (auto i = 0u; i < beeps; i++) {
+      turnOnBuzzer();
+      delay(beepMs);
+      turnOffBuzzer();
+      if (i < beeps - 1) {
+        delay(delayMs);
+      }
+    }  
+  }
 
-void startupBeep() {
-  constexpr auto beeps = 2u;
-  constexpr auto delayMs = 100u;
-  constexpr auto beepMs = 40u;
-  for (auto i = 0u; i < beeps; i++) {
-    turnOnBuzzer();
-    delay(beepMs);
-    turnOffBuzzer();
-    if (i < beeps - 1) {
-      delay(delayMs);
-    }
-  }  
 }
 
 extern "C" void applicationLoop() {
@@ -37,11 +38,12 @@ extern "C" void applicationLoop() {
   uint32_t modeLedTimestamp;
   uint32_t modeLedIntervalMs = 100u;
   uint32_t buzzerTimestamp;
-  //int32_t warningSampleCount = 0;
+  uint32_t buzzerInterval = cWarningBuzzerIntervalMs;
+  int32_t batteryWarningSampleCount = 0;
   int32_t batteryMinOffSampleCount = 0;
-  bool batteryOk = true;
-  uint32_t batteryValue;
-  uint32_t potmeterValue;
+  uint32_t batteryRawValue;
+  uint32_t potmeterRawValue;
+  papr::BatteryLevelCounter batteryLevel(cBatteryMinOffRawValue, cBatteryWarningRawValue, cBatteryOverLimitSampleCount);
   
   turnOnPowerLed();
   uint32_t counter = 100u;
@@ -55,38 +57,23 @@ extern "C" void applicationLoop() {
     
     // Check ADC
     if (isAdcReady()) {
-      batteryValue = getBatteryValue(); // TODO count only if there is new value
-      potmeterValue = getPotmeterValue();
-      // Count battery below / above cut off limit
-      if (batteryValue <= cBatteryMinOffRawValue) {
-        batteryMinOffSampleCount = batteryMinOffSampleCount < cBatteryMinOffSampleCount ? ++batteryMinOffSampleCount : cBatteryMinOffSampleCount;
-      }
-      if (batteryValue > cBatteryMinOffRawValue) {
-        batteryMinOffSampleCount = batteryMinOffSampleCount > 0 ? --batteryMinOffSampleCount : 0;
+      batteryRawValue = getBatteryValue();
+      potmeterRawValue = getPotmeterValue();
+      if (batteryLevel.update(batteryRawValue)) { // State changed
+        turnOnBuzzer();
+        delay(50u);
+        turnOffBuzzer();
       }
     }
     
-    if (potmeterValue < cAdcPotmeterLowLimit) {
+    if (potmeterRawValue < cAdcPotmeterLowLimit) {
       pwm = 0;
     }
     else {
-      pwm = papr::map(potmeterValue, cAdcPotmeterLowLimit, papr::cAdcMax, cPwmLowLimit, papr::cPwmMax);
-    }
-
-    if (batteryOk && batteryMinOffSampleCount >= cBatteryMinOffSampleCount) {
-      batteryOk = false;
-      turnOnBuzzer();
-      delay(cBuzzerOnTimeWhenBatteryDeadMs);
-      turnOffBuzzer();
+      pwm = papr::map(potmeterRawValue, cAdcPotmeterLowLimit, papr::cAdcMax, cPwmLowLimit, papr::cPwmMax);
     }
     
-    if (cRestartAfterBatteryLow && !batteryOk && batteryValue > cBatteryWarningRawValue) {
-      batteryMinOffSampleCount = 0;
-      batteryOk = true;
-      turnOnPowerLed();
-    }
-    
-    pwm = batteryOk ? pwm : 0u;
+    pwm = batteryLevel.notLow() ? pwm : 0u;
     setMotorPwm(pwm);
     uint32_t now = getTick();
     if (pwm == 0) {
@@ -105,19 +92,27 @@ extern "C" void applicationLoop() {
         modeLedTimestamp = now;
       }
     }
-    if (!batteryOk && now - powerLedTimestamp > powerLedIntervalMs)
+    if (batteryLevel == papr::BatteryLevel::cBatteryLow && now - powerLedTimestamp > powerLedIntervalMs)
     {
       togglePowerLed();
       powerLedTimestamp = now;
     }
     
-    if (batteryOk && batteryValue < cBatteryWarningRawValue && now - buzzerTimestamp > cBuzzerIntervalMs) {
-      //TODO Handle warning buzzer
-      //turnOnBuzzer();
-      //delay(cBuzzerOnTimeMs);
-      //turnOffBuzzer();
-      buzzerTimestamp = now;
+    if (now - buzzerTimestamp > buzzerInterval) {
+      if (batteryLevel == papr::BatteryLevel::cBatteryOk) {
+        turnOffBuzzer();
+      }
+      else if (batteryLevel == papr::BatteryLevel::cBatteryWarning) {
+        
+      }
+      else if (batteryLevel == papr::BatteryLevel::cBatteryWarning) {
+        
+      }
+      else {
+        //Doin' nothin'
+      }
     }
+    
     delay(10u);
   }
 }
