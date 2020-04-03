@@ -22,7 +22,7 @@ namespace {
 }
 
 void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
-  for (unsigned int i = start; i < end / 2; i++) {
+  for (unsigned int i = start; i < end; i++) {
     adcData[i % cAdcChannelCount] += adcBuffer[i];
     adcData[i % cAdcChannelCount] /= 2;
   }
