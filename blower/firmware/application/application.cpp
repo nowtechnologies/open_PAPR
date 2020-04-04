@@ -56,27 +56,25 @@ extern "C" void applicationLoop() {
     uint32_t now = getTick();
     
     // Check ADC
-    if (isAdcReady()) {
-      batteryRawValue = getBatteryValue();
-      potmeterRawValue = getPotmeterValue();
-      if (batteryLevel.update(batteryRawValue)) { // Battery state changed
-        if (batteryLevel == papr::BatteryLevel::cBatteryLow) {
-          turnOnBuzzer();
-          delay(cBuzzerOnTimeWhenBatteryDeadMs);
-          turnOffBuzzer();
-          buzzerInterval = 0;
-        }
-        else if (batteryLevel == papr::BatteryLevel::cBatteryWarning) {
-          turnOnPowerLed();
-          turnOffBuzzer();
-        }
-        else if (batteryLevel == papr::BatteryLevel::cBatteryOk) {
-          turnOnPowerLed();
-          turnOffBuzzer();
-        }
-        else {
-          // Doin' Nothin'
-        }
+    batteryRawValue = getBatteryValue();
+    potmeterRawValue = getPotmeterValue();
+    if (batteryLevel.update(batteryRawValue)) { // Battery state changed
+      if (batteryLevel == papr::BatteryLevel::cBatteryLow) {
+        turnOnBuzzer();
+        delay(cBuzzerOnTimeWhenBatteryDeadMs);
+        turnOffBuzzer();
+        buzzerInterval = 0;
+      }
+      else if (batteryLevel == papr::BatteryLevel::cBatteryWarning) {
+        turnOnPowerLed();
+        turnOffBuzzer();
+      }
+      else if (batteryLevel == papr::BatteryLevel::cBatteryOk) {
+        turnOnPowerLed();
+        turnOffBuzzer();
+      }
+      else {
+        // Doin' Nothin'
       }
     }
     

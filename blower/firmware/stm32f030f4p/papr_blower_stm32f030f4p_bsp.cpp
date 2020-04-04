@@ -17,8 +17,6 @@ namespace {
   constexpr uint32_t cIndexAdcTemp =     2u;
   constexpr uint32_t cIndexAdcVref =     3u;
   
-  volatile bool adcReady = false;
-  
   volatile uint16_t adcBuffer[cAdcBufferSize];
   volatile uint32_t adcData[cAdcChannelCount];
 }
@@ -32,7 +30,6 @@ void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
 
 extern "C" void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
   calculateAndCopyAdcData(cAdcBufferSize / 2, cAdcBufferSize);
-  adcReady = true;
 }
 
 extern "C" void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc) {
@@ -106,18 +103,12 @@ bool isBuzzerOn() {
 }
 
 // ADC
-bool isAdcReady() {
-  return adcReady;
-}
-
 uint32_t getPotmeterValue() {
   return adcData[cIndexAdcPotmeter];
 }
 
 extern uint32_t getBatteryValue() {
-  adcReady = false;
-  uint32_t value = adcData[cIndexAdcBattery];
-  return value;
+  return adcData[cIndexAdcBattery];
 }
 
 // Motor

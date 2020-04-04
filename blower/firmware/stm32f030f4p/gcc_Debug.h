@@ -1402,6 +1402,7 @@
 //Drivers\CMSIS\Device\ST\STM32F0xx\Include
 //Drivers\STM32F0xx_HAL_Driver\Inc
 //Drivers\STM32F0xx_HAL_Driver\Inc\Legacy
+//../application
 // --- Include directories end --- //
 
 
