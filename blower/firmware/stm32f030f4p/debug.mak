@@ -6,7 +6,7 @@ BINARYDIR := Debug
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1 flash_layout STM32F030x6
-INCLUDE_DIRS := Core\Inc Drivers\CMSIS\Include Drivers\CMSIS\Device\ST\STM32F0xx\Include Drivers\STM32F0xx_HAL_Driver\Inc Drivers\STM32F0xx_HAL_Driver\Inc\Legacy
+INCLUDE_DIRS := Core\Inc Drivers\CMSIS\Include Drivers\CMSIS\Device\ST\STM32F0xx\Include Drivers\STM32F0xx_HAL_Driver\Inc Drivers\STM32F0xx_HAL_Driver\Inc\Legacy ../application
 LIBRARY_DIRS := 
 LIBRARY_NAMES := 
 ADDITIONAL_LINKER_INPUTS := 

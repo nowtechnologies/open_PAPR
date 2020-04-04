@@ -58,8 +58,7 @@ static void MX_DMA_Init(void);
 static void MX_ADC_Init(void);
 static void MX_TIM14_Init(void);
 /* USER CODE BEGIN PFP */
-extern void applicationSetup();
-extern void applicationLoop();
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/

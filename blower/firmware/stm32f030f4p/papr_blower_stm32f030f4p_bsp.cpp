@@ -1,4 +1,6 @@
 #include "main.h"
+#include "bspInterface.h"
+#include "applicationInterface.h"
 
 extern ADC_HandleTypeDef hadc;
 extern DMA_HandleTypeDef hdma_adc;

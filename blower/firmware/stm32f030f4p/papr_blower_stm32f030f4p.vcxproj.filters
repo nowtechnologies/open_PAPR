@@ -279,5 +279,11 @@
     <ClInclude Include="..\application\application.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="..\application\applicationInterface.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\application\bspInterface.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
