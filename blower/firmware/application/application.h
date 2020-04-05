@@ -67,6 +67,8 @@ namespace papr {
       return mBatteryLevel == aBatteryLevel;
     }
     
+    /// Updating the counter with fresh value and checking if just hit lower or upper limit.
+    /// return True if any of the counters reach zero or upper limit.
     bool update(uint32_t const aValue) {
       bool changed = false;
       if (aValue < cLowerLimit) {
@@ -121,7 +123,7 @@ namespace papr {
       return mBatteryLevel;
     }
     
-    bool notLow() const {
+    inline bool notLow() const {
       return mBatteryLevel < papr::BatteryLevel::cBatteryLow;
     }
     

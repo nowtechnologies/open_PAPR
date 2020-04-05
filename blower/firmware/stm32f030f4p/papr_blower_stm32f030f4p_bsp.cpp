@@ -21,6 +21,7 @@ namespace {
   volatile uint32_t adcData[cAdcChannelCount];
 }
 
+/// Calculating ADC oversample average
 void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
   for (unsigned int i = start; i < end; i++) {
     adcData[i % cAdcChannelCount] += adcBuffer[i];
@@ -28,10 +29,12 @@ void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
   }
 }
 
+/// HAL callback
 extern "C" void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
   calculateAndCopyAdcData(cAdcBufferSize / 2, cAdcBufferSize);
 }
 
+/// HAL callback
 extern "C" void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc) {
   calculateAndCopyAdcData(0, cAdcBufferSize / 2);
 }
