@@ -4,40 +4,45 @@
 extern "C" {
 #endif
 
-#include <cstdint>
+#include <stdint.h>
 #include "common.h"
-  
-// System
 
-/// return Elapsed time in ms since power on.
-uint32_t getTick();
+namespace papr {
 
-/// Waiting for the given time period before returning.
-/// param aDelayMs 
-void delay(uint32_t const aDelayMs);
+  // System
 
-// Power LED
-void turnOnPowerLed();
-void turnOffPowerLed();
-void togglePowerLed();
-bool isPowerLedOn();
+  /// return Elapsed time in ms since power on.
+  uint32_t getTick();
 
-// Mode LED
-void turnOnModeLed();
-void turnOffModeLed();
-bool isModeLedOn();
+  /// Waiting for the given time period before returning.
+  /// param aDelayMs 
+  void delayMs(uint32_t const aDelayMs);
 
-// Buzzer
-void turnOnBuzzer();
-void turnOffBuzzer();
-bool isBuzzerOn();
+  // Power LED
+  void turnOnPowerLed();
+  void turnOffPowerLed();
+  void togglePowerLed();
+  bool isPowerLedOn();
 
-// ADC
-uint32_t getPotmeterValue();
-uint32_t getBatteryValue();
+  // Mode LED
+  void turnOnModeLed();
+  void turnOffModeLed();
+  void toggleModeLed();
+  bool isModeLedOn();
 
-// Motor
-void setMotorPwm(uint32_t const aMotorPwm);
+  // Buzzer
+  void turnOnBuzzer();
+  void turnOffBuzzer();
+  bool isBuzzerOn();
+
+  // ADC
+  uint32_t getPotmeterValue();
+  uint32_t getBatteryValue();
+
+  // Motor
+  void setMotorPwm(uint32_t const aMotorPwm);
+
+}
   
 #ifdef __cplusplus
 }

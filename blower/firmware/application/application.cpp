@@ -21,11 +21,11 @@ namespace {
     constexpr auto delayMs = 100u;
     constexpr auto beepMs = 40u;
     for (auto i = 0u; i < beeps; i++) {
-      turnOnBuzzer();
-      delay(beepMs);
-      turnOffBuzzer();
+      papr::turnOnBuzzer();
+      papr::delayMs(beepMs);
+      papr::turnOffBuzzer();
       if (i < beeps - 1) {
-        delay(delayMs);
+        papr::delayMs(delayMs);
       }
     }  
   }
@@ -47,35 +47,35 @@ extern "C" void applicationLoop() {
   uint32_t potmeterRawValue;
   papr::BatteryLevelCounter batteryLevel(cBatteryMinOffRawValue, cBatteryWarningRawValue, cBatteryOverLimitSampleCount);
   
-  turnOnPowerLed();
+  papr::turnOnPowerLed();
   uint32_t counter = 100u;
-  while(getBatteryValue() < cBatteryMinOffRawValue && --counter > 0) {
-    delay(10u);
+  while(papr::getBatteryValue() < cBatteryMinOffRawValue && --counter > 0) {
+    papr::delayMs(10u);
   }
   
   startupBeep();
   
   while(true) {
-    uint32_t now = getTick();
+    uint32_t now = papr::getTick();
     
     // Check ADC
     if (now - adcPollTimestamp > cAdcPollIntervalMs) {
-      batteryRawValue = getBatteryValue();
-      potmeterRawValue = getPotmeterValue();
+      batteryRawValue = papr::getBatteryValue();
+      potmeterRawValue = papr::getPotmeterValue();
       if (batteryLevel.update(batteryRawValue)) { // Battery state changed
         if (batteryLevel == papr::BatteryLevel::cBatteryLow) {
-          turnOnBuzzer();
-          delay(cBuzzerOnTimeWhenBatteryDeadMs);
-          turnOffBuzzer();
+          papr::turnOnBuzzer();
+          papr::delayMs(cBuzzerOnTimeWhenBatteryDeadMs);
+          papr::turnOffBuzzer();
           buzzerInterval = 0;
         }
         else if (batteryLevel == papr::BatteryLevel::cBatteryWarning) {
-          turnOnPowerLed();
-          turnOffBuzzer();
+          papr::turnOnPowerLed();
+          papr::turnOffBuzzer();
         }
         else if (batteryLevel == papr::BatteryLevel::cBatteryOk) {
-          turnOnPowerLed();
-          turnOffBuzzer();
+          papr::turnOnPowerLed();
+          papr::turnOffBuzzer();
         }
         else {
           // Doin' Nothin'
@@ -94,20 +94,20 @@ extern "C" void applicationLoop() {
     
     // Set PWM to 0 when battery is low
     pwm = batteryLevel.notLow() ? pwm : 0u;
-    setMotorPwm(pwm);
+    papr::setMotorPwm(pwm);
     
     // Handle PWM related mode LED blinking
     if (pwm == 0) {
-      turnOffModeLed();
+      papr::turnOffModeLed();
     }
     else {
       if (now - modeLedTimestamp > modeLedIntervalMs) {
-        if (!isModeLedOn()) {
-          turnOnModeLed();
+        if (!papr::isModeLedOn()) {
+          papr::turnOnModeLed();
           modeLedIntervalMs = cModeLedOnTimeMs;
         }
         else {
-          turnOffModeLed();
+          papr::turnOffModeLed();
           modeLedIntervalMs = (0xFFF - pwm ) / 4;
         }
         modeLedTimestamp = now;
@@ -115,33 +115,33 @@ extern "C" void applicationLoop() {
     }
     // Handle power led blinking
     if (batteryLevel == papr::BatteryLevel::cBatteryLow && now - powerLedTimestamp > powerLedIntervalMs) {
-      togglePowerLed();
+      papr::togglePowerLed();
       powerLedTimestamp = now;
     }
     
     // Handle buzzer beeps when warning or low
     if (now - buzzerTimestamp > buzzerInterval) {
       if (batteryLevel == papr::BatteryLevel::cBatteryOk) { // Battery OK, no beep
-        turnOffBuzzer();
+        papr::turnOffBuzzer();
       }
       else if (batteryLevel == papr::BatteryLevel::cBatteryWarning) { // Warning beeps
-        if (isBuzzerOn()) {
+        if (papr::isBuzzerOn()) {
           buzzerInterval = cBuzzerWarningIntervalMs;
-          turnOffBuzzer();
+          papr::turnOffBuzzer();
         }
         else {
           buzzerInterval = cBuzzerOnTimeMs;
-          turnOnBuzzer();
+          papr::turnOnBuzzer();
         }
       }
       else if (batteryLevel == papr::BatteryLevel::cBatteryLow) { // Battery low beeps
-        if (isBuzzerOn()) {
+        if (papr::isBuzzerOn()) {
           buzzerInterval = cBuzzerLowIntervalMs;
-          turnOffBuzzer();
+          papr::turnOffBuzzer();
         }
         else {
           buzzerInterval = cBuzzerOnTimeMs;
-          turnOnBuzzer();
+          papr::turnOnBuzzer();
         }
       }
       else {
@@ -150,6 +150,6 @@ extern "C" void applicationLoop() {
       buzzerTimestamp = now;
     }
     
-    delay(cLoopDelayMs);
+    papr::delayMs(cLoopDelayMs);
   }
 }

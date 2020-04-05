@@ -24,14 +24,15 @@ namespace {
   DMA_HandleTypeDef handleDmaAdc = hdma_adc1;
   TIM_HandleTypeDef handleTimer = htim17;
   uint32_t timerChannel = TIM_CHANNEL_1;
-}
-
-/// Calculating ADC oversample average
-void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
-  for (unsigned int i = start; i < end; i++) {
-    adcData[i % cAdcChannelCount] += adcBuffer[i];
-    adcData[i % cAdcChannelCount] /= 2;
+  
+  /// Calculating ADC oversample average
+  void calculateAndCopyAdcData(uint32_t const start, uint32_t const end) {
+    for (unsigned int i = start; i < end; i++) {
+      adcData[i % cAdcChannelCount] += adcBuffer[i];
+      adcData[i % cAdcChannelCount] /= 2;
+    }
   }
+  
 }
 
 /// HAL callback
@@ -59,70 +60,74 @@ extern "C" void applicationSetup() {
 }
 
 // System
-uint32_t getTick() {
+uint32_t papr::getTick() {
   return HAL_GetTick();
 }
 
-void delay(uint32_t const aDelayMs) {
+void papr::delayMs(uint32_t const aDelayMs) {
   HAL_Delay(aDelayMs);
 }
 
 // Power LED
-void turnOnPowerLed() {
+void papr::turnOnPowerLed() {
   //HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
 }
 
-void turnOffPowerLed() {
+void papr::turnOffPowerLed() {
   //HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_RESET);
 }
 
-void togglePowerLed() {
+void papr::togglePowerLed() {
   //HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
 }
 
-bool isPowerLedOn() {
+bool papr::isPowerLedOn() {
   //return HAL_GPIO_ReadPin(POWER_LED_GPIO_Port, POWER_LED_Pin) == GPIO_PIN_SET;
   return false;
 }
 
 // Mode LED
-void turnOnModeLed() {
+void papr::turnOnModeLed() {
   HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_SET);
 }
 
-void turnOffModeLed() {
+void papr::turnOffModeLed() {
   HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
 }
 
-bool isModeLedOn() {
+void papr::toggleModeLed() {
+  HAL_GPIO_TogglePin(MODE_LED_GPIO_Port, MODE_LED_Pin);
+}
+
+bool papr::isModeLedOn() {
   return HAL_GPIO_ReadPin(MODE_LED_GPIO_Port, MODE_LED_Pin) == GPIO_PIN_SET;
 }
 
 // Buzzer
-void turnOnBuzzer() {
+void papr::turnOnBuzzer() {
   //HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
 }
 
-void turnOffBuzzer() {
+void papr::turnOffBuzzer() {
   //HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 }
 
-bool isBuzzerOn() {
+bool papr::isBuzzerOn() {
   //return HAL_GPIO_ReadPin(BUZZER_GPIO_Port, BUZZER_Pin) == GPIO_PIN_SET;
   return false;
 }
 
 // ADC
-uint32_t getPotmeterValue() {
+uint32_t papr::getPotmeterValue() {
   return adcData[cIndexAdcPotmeter];
 }
 
-extern uint32_t getBatteryValue() {
+uint32_t papr::getBatteryValue() {
   //return adcData[cIndexAdcBattery];
   return papr::cAdcMax;
 }
 
 // Motor
-void setMotorPwm(uint32_t const aMotorPwm) {
+void papr::setMotorPwm(uint32_t const aMotorPwm) {
   __HAL_TIM_SET_COMPARE(&handleTimer, timerChannel, aMotorPwm);
 }
