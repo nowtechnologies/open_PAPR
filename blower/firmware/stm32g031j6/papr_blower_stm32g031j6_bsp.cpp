@@ -87,16 +87,15 @@ bool isPowerLedOn() {
 
 // Mode LED
 void turnOnModeLed() {
-  //HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_SET);
 }
 
 void turnOffModeLed() {
-  //HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
 }
 
 bool isModeLedOn() {
-  //return HAL_GPIO_ReadPin(MODE_LED_GPIO_Port, MODE_LED_Pin) == GPIO_PIN_SET;
-  return false;
+  return HAL_GPIO_ReadPin(MODE_LED_GPIO_Port, MODE_LED_Pin) == GPIO_PIN_SET;
 }
 
 // Buzzer

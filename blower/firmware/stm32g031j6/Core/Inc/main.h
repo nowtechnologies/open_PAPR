@@ -62,6 +62,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define PWM_MOTOR_IN_Pin GPIO_PIN_9
 #define PWM_MOTOR_IN_GPIO_Port GPIOB
+#define MODE_LED_Pin GPIO_PIN_0
+#define MODE_LED_GPIO_Port GPIOA
 #define ADC_BATTERY_Pin GPIO_PIN_0
 #define ADC_BATTERY_GPIO_Port GPIOB
 #define ADC_POT_Pin GPIO_PIN_12
