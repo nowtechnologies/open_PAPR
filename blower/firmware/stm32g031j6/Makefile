@@ -26,7 +26,7 @@ include $(CONFIGURATION_FLAGS_FILE)
 #LINKER_SCRIPT defined inside the configuration file (e.g. debug.mak) should override any linker scripts defined in shared .mak files
 CONFIGURATION_LINKER_SCRIPT := $(LINKER_SCRIPT)
 
-include $(ADDITIONAL_MAKE_FILES)
+include $(ADDITIONAL_MAKE_FILES) linux.mak
 
 ifneq ($(CONFIGURATION_LINKER_SCRIPT),)
 LINKER_SCRIPT := $(CONFIGURATION_LINKER_SCRIPT)
@@ -40,10 +40,10 @@ ifeq ($(AS),)
 AS := as
 endif
 
-ifeq ($(AS),as)
+#ifeq ($(AS),as)
 AS := $(CC)
 ASFLAGS := $(CFLAGS) $(ASFLAGS)
-endif
+#endif
 
 ifeq ($(TOOLCHAIN_SUBTYPE),armcc)
 	CC_DEPENDENCY_FILE_SPECIFIER := --depend
