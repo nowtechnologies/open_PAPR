@@ -45,7 +45,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>stm32g031j6.gpdsc</RelativePath>
-        <Timestamp>132298883575670499</Timestamp>
+        <Timestamp>132298889783891575</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>

@@ -1,10 +1,12 @@
+/// STM32G031J6 Board Support Package
+
 #include "main.h"
 #include "bspInterface.h"
 #include "applicationInterface.h"
 
-extern ADC_HandleTypeDef hadc;
-extern DMA_HandleTypeDef hdma_adc;
-extern TIM_HandleTypeDef htim14;
+extern ADC_HandleTypeDef hadc1;
+extern DMA_HandleTypeDef hdma_adc1;
+extern TIM_HandleTypeDef htim17;
 
 namespace {
   constexpr uint32_t cAdcChannelCount = ((uint32_t)  4);
@@ -18,9 +20,9 @@ namespace {
   volatile uint16_t adcBuffer[cAdcBufferSize];
   volatile uint32_t adcData[cAdcChannelCount];
   
-  ADC_HandleTypeDef handleAdc = hadc;
-  DMA_HandleTypeDef handleDmaAdc = hdma_adc;
-  TIM_HandleTypeDef handleTimer = htim14;
+  ADC_HandleTypeDef handleAdc = hadc1;
+  DMA_HandleTypeDef handleDmaAdc = hdma_adc1;
+  TIM_HandleTypeDef handleTimer = htim17;
   uint32_t timerChannel = TIM_CHANNEL_1;
 }
 
@@ -67,45 +69,48 @@ void delay(uint32_t const aDelayMs) {
 
 // Power LED
 void turnOnPowerLed() {
-  HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_SET);
 }
 
 void turnOffPowerLed() {
-  HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_RESET);
+  //HAL_GPIO_WritePin(POWER_LED_GPIO_Port, POWER_LED_Pin, GPIO_PIN_RESET);
 }
 
 void togglePowerLed() {
-  HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
+  //HAL_GPIO_TogglePin(POWER_LED_GPIO_Port, POWER_LED_Pin);
 }
 
 bool isPowerLedOn() {
-  return HAL_GPIO_ReadPin(POWER_LED_GPIO_Port, POWER_LED_Pin) == GPIO_PIN_SET;
+  //return HAL_GPIO_ReadPin(POWER_LED_GPIO_Port, POWER_LED_Pin) == GPIO_PIN_SET;
+  return false;
 }
 
 // Mode LED
 void turnOnModeLed() {
-  HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_SET);
 }
 
 void turnOffModeLed() {
-  HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
+  //HAL_GPIO_WritePin(MODE_LED_GPIO_Port, MODE_LED_Pin, GPIO_PIN_RESET);
 }
 
 bool isModeLedOn() {
-  return HAL_GPIO_ReadPin(MODE_LED_GPIO_Port, MODE_LED_Pin) == GPIO_PIN_SET;
+  //return HAL_GPIO_ReadPin(MODE_LED_GPIO_Port, MODE_LED_Pin) == GPIO_PIN_SET;
+  return false;
 }
 
 // Buzzer
 void turnOnBuzzer() {
-  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+  //HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
 }
 
 void turnOffBuzzer() {
-  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+  //HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 }
 
 bool isBuzzerOn() {
-  return HAL_GPIO_ReadPin(BUZZER_GPIO_Port, BUZZER_Pin) == GPIO_PIN_SET;
+  //return HAL_GPIO_ReadPin(BUZZER_GPIO_Port, BUZZER_Pin) == GPIO_PIN_SET;
+  return false;
 }
 
 // ADC
@@ -114,7 +119,8 @@ uint32_t getPotmeterValue() {
 }
 
 extern uint32_t getBatteryValue() {
-  return adcData[cIndexAdcBattery];
+  //return adcData[cIndexAdcBattery];
+  return papr::cAdcMax;
 }
 
 // Motor

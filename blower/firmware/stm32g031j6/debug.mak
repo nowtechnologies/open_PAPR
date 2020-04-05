@@ -6,7 +6,7 @@ BINARYDIR := Debug
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1 flash_layout STM32G031xx
-INCLUDE_DIRS := Core\Inc Drivers\CMSIS\Device\ST\STM32G0xx\Include Drivers\STM32G0xx_HAL_Driver\Inc Drivers\STM32G0xx_HAL_Driver\Inc\Legacy Drivers/CMSIS/Core/Include
+INCLUDE_DIRS := Drivers/CMSIS/Core/Include Core\Inc Drivers\CMSIS\Device\ST\STM32G0xx\Include Drivers\STM32G0xx_HAL_Driver\Inc Drivers\STM32G0xx_HAL_Driver\Inc\Legacy ../application
 LIBRARY_DIRS := 
 LIBRARY_NAMES := 
 ADDITIONAL_LINKER_INPUTS := 
@@ -14,7 +14,7 @@ MACOS_FRAMEWORKS :=
 LINUX_PACKAGES := 
 
 CFLAGS := -ggdb -ffunction-sections -O0
-CXXFLAGS := -std=c++1z -ggdb -ffunction-sections -fno-exceptions -fno-rtti -O0
+CXXFLAGS := -std=c++14 -ggdb -ffunction-sections -fno-exceptions -fno-rtti -O0
 ASFLAGS := 
 LDFLAGS := -Wl,-gc-sections
 COMMONFLAGS := 

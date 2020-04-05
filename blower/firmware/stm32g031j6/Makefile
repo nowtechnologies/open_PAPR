@@ -64,7 +64,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := Core/Src/main.c Core/Src/stm32g0xx_hal_msp.c Core/Src/stm32g0xx_hal_timebase_tim.c Core/Src/stm32g0xx_it.c Drivers/CMSIS/Device/ST/STM32G0xx/Source/Templates/system_stm32g0xx.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_exti.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_flash.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_flash_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_pwr.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_pwr_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_adc.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_rcc.c startup_stm32g031xx.s
+SOURCEFILES := ../application/application.cpp Core/Src/main.c Core/Src/stm32g0xx_hal_msp.c Core/Src/stm32g0xx_hal_timebase_tim.c Core/Src/stm32g0xx_it.c Drivers/CMSIS/Device/ST/STM32G0xx/Source/Templates/system_stm32g0xx.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_dma_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_exti.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_flash.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_flash_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_pwr.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_pwr_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim_ex.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_adc.c Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_rcc.c papr_blower_stm32g031j6_bsp.cpp startup_stm32g031xx.s
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -227,6 +227,10 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER)F $(@:.o=.dep)
 
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated. Remove this line to suppress auto-generation of file rules.
+
+
+$(BINARYDIR)/application.o : ../application/application.cpp $(all_make_files) |$(BINARYDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CC_DEPENDENCY_FILE_SPECIFIER) $(@:.o=.dep)
 
 
 $(BINARYDIR)/main.o : Core/Src/main.c $(all_make_files) |$(BINARYDIR)

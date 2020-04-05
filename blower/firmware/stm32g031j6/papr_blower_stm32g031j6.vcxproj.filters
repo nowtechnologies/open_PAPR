@@ -176,6 +176,12 @@
     <ClCompile Include="Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_gpio.c">
       <Filter>Source files\STM32Cube HAL\GPIO</Filter>
     </ClCompile>
+    <ClCompile Include="..\application\application.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="papr_blower_stm32g031j6_bsp.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.mak">
@@ -283,6 +289,18 @@
     </ClInclude>
     <ClInclude Include="Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_gpio_ex.h">
       <Filter>Header files\STM32Cube HAL\GPIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\application\application.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\application\applicationInterface.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\application\bspInterface.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\application\common.h">
+      <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

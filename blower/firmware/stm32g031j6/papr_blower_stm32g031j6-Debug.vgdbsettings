@@ -13,8 +13,11 @@
   </Project>
   <Build xsi:type="com.visualgdb.build.embedded">
     <ToolchainID>
+      <ID>com.visualgdb.arm-eabi</ID>
       <Version>
-        <Revision>0</Revision>
+        <GCC>9.2.1</GCC>
+        <GDB>8.3.0</GDB>
+        <Revision>1</Revision>
       </Version>
     </ToolchainID>
     <MakeFilePathRelativeToSourceDir>Makefile</MakeFilePathRelativeToSourceDir>

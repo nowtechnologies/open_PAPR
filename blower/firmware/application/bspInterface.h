@@ -5,6 +5,7 @@ extern "C" {
 #endif
 
 #include <cstdint>
+#include "common.h"
   
 // System
 
