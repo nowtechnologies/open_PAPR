@@ -1,13 +1,12 @@
 /*
  * papr_blower_attiny85.cpp
  *
- * Created: 2020. 04. 05. 12:27:12
- * Author : root
+ * Author : vmp
  */ 
 
-#include <avr/io.h>
 #include <stdint.h>
-#include "applicationInterface.h"
+#include <avr/io.h>
+#include "../application/applicationInterface.h"
 
 int main(void) {
   applicationSetup();
@@ -15,4 +14,3 @@ int main(void) {
   while (1) {
   }
 }
-
