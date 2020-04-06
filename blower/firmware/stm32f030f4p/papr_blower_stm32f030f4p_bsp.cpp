@@ -18,9 +18,9 @@ namespace {
   volatile uint16_t adcBuffer[cAdcBufferSize];
   volatile uint32_t adcData[cAdcChannelCount];
   
-  ADC_HandleTypeDef handleAdc = hadc;
-  DMA_HandleTypeDef handleDmaAdc = hdma_adc;
-  TIM_HandleTypeDef handleTimer = htim14;
+  ADC_HandleTypeDef &handleAdc = hadc;
+  DMA_HandleTypeDef &handleDmaAdc = hdma_adc;
+  TIM_HandleTypeDef &handleTimer = htim14;
   uint32_t timerChannel = TIM_CHANNEL_1;
   
   /// Calculating ADC oversample average
