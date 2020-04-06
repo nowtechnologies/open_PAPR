@@ -1,3 +1,5 @@
+# define F_CPU 1000000UL
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include "../application/bspInterface.h"
@@ -43,7 +45,15 @@ uint32_t papr::getTick() {
 }
 
 void papr::delayMs(uint32_t const aDelayMs) {
-  //_delay_ms(aDelayMs);
+  uint32_t ms = aDelayMs;
+  while (0 < ms && ms < 10) {
+    _delay_ms(10u);
+    ms -= 10;
+  }
+  while (0 < ms) {
+    _delay_ms(1u);
+    --ms;
+  }
 }
 
 // Power LED
