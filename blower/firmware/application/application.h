@@ -6,7 +6,7 @@
 
 namespace papr {
   
-  constexpr bool cBatteryProtectionEnabled = false;
+  constexpr bool cBatteryProtectionEnabled = true;
   
   enum class BatteryLevel {
     cBatteryOk = 0u,
