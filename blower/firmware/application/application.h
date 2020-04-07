@@ -6,6 +6,8 @@
 
 namespace papr {
   
+  constexpr bool cBatteryProtectionEnabled = false;
+  
   enum class BatteryLevel {
     cBatteryOk = 0u,
     cBatteryWarning = 1u,
@@ -109,6 +111,9 @@ namespace papr {
       }
       else {
         // Doin' Nothin'
+      }
+      if (!cBatteryProtectionEnabled) {
+        mBatteryLevel = BatteryLevel::cBatteryOk;
       }
       return changed;
     }
