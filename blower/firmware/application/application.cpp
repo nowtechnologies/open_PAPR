@@ -50,6 +50,9 @@ extern "C" void applicationLoop() {
   papr::turnOnPowerLed();
   uint32_t counter = 100u;
   while(papr::getBatteryValue() < cBatteryMinOffRawValue && --counter > 0) {
+    for (auto i = 0u; i < 20; i++) {
+      batteryLevel.update(papr::getBatteryValue());
+    }
     papr::delayMs(10u);
   }
   
@@ -64,6 +67,7 @@ extern "C" void applicationLoop() {
       potmeterRawValue = papr::getPotmeterValue();
       if (batteryLevel.update(batteryRawValue)) { // Battery state changed
         if (batteryLevel == papr::BatteryLevel::cBatteryLow) {
+          papr::setMotorPwm(0u);
           papr::turnOnBuzzer();
           papr::delayMs(cBuzzerOnTimeWhenBatteryDeadMs);
           papr::turnOffBuzzer();
