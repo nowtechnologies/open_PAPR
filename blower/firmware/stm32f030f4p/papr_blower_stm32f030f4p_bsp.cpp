@@ -1,13 +1,3 @@
-// First tesco pump:
-// PWM Timer Prescaler = 3u;
-// PWM minimum = papr::cPwmMax / 40u;
-// PWM maximum = 
-//
-// Second tesco pump:
-// PWM Timer Prescaler = 3u;
-// PWM minimum = papr::cPwmMax / 20u;
-// PWM maximum = 50%
-
 #include "main.h"
 #include "bspInterface.h"
 #include "applicationInterface.h"
@@ -17,7 +7,7 @@ extern DMA_HandleTypeDef hdma_adc;
 extern TIM_HandleTypeDef htim14;
 
 namespace {
-  constexpr uint32_t cPwmTimerPrescaler = 3u; //0 = 5.8 kHz, 1 = 2.9 kHz, 2 = 1.9 kHz, 3 = 1.5 kHz, 4 = 1.1 kHz, 5 = 975 Hz (48 MHz CPU & 0xFFF max)
+  constexpr uint32_t cPwmTimerPrescaler = 10u; // 10 = ~1 kHz
   constexpr uint32_t cAdcChannelCount = ((uint32_t)  4);
   constexpr uint32_t cAdcSampleCount = ((uint32_t)  64);
   constexpr uint32_t cAdcBufferSize =   ((uint32_t)  cAdcSampleCount * cAdcChannelCount);
