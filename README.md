@@ -9,3 +9,4 @@ Powered Air Purifying Respirator
 ### Photos
 
 ![](doc/nowtech_papr_proto_01.jpg)
+![](doc/nowtech_papr_proto_03.jpg)
