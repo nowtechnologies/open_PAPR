@@ -62,12 +62,14 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define PWM_MOTOR_IN_Pin GPIO_PIN_9
 #define PWM_MOTOR_IN_GPIO_Port GPIOB
-#define MODE_LED_Pin GPIO_PIN_0
-#define MODE_LED_GPIO_Port GPIOA
 #define ADC_BATTERY_Pin GPIO_PIN_0
 #define ADC_BATTERY_GPIO_Port GPIOB
 #define ADC_POT_Pin GPIO_PIN_12
 #define ADC_POT_GPIO_Port GPIOA
+#define BUZZER_Pin GPIO_PIN_13
+#define BUZZER_GPIO_Port GPIOA
+#define MODE_LED_Pin GPIO_PIN_14
+#define MODE_LED_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
