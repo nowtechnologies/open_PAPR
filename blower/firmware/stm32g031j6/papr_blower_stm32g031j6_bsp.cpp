@@ -105,15 +105,15 @@ bool papr::isModeLedOn() {
 
 // Buzzer
 void papr::turnOnBuzzer() {
-  //HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET);
 }
 
 void papr::turnOffBuzzer() {
-  //HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 }
 
 bool papr::isBuzzerOn() {
-  //return HAL_GPIO_ReadPin(BUZZER_GPIO_Port, BUZZER_Pin) == GPIO_PIN_SET;
+  return HAL_GPIO_ReadPin(BUZZER_GPIO_Port, BUZZER_Pin) == GPIO_PIN_SET;
   return false;
 }
 
@@ -123,8 +123,7 @@ uint32_t papr::getPotmeterValue() {
 }
 
 uint32_t papr::getBatteryValue() {
-  //return adcData[cIndexAdcBattery];
-  return papr::cAdcMax;
+  return adcData[cIndexAdcBattery];
 }
 
 // Motor
